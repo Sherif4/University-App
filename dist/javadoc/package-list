@@ -1,0 +1,10 @@
+dataaccesslayer
+models
+university
+university.admindashboardview
+university.admindashboardview.addenrollment
+university.admindashboardview.courses
+university.admindashboardview.departments
+university.admindashboardview.enrollments
+university.admindashboardview.home
+university.admindashboardview.students
