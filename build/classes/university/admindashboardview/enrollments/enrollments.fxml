@@ -6,10 +6,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" fx:id="EnrollAP" prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="university.admindashboardview.enrollments.EnrollmentsController">
    <children>
@@ -47,7 +49,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="enrollmentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0">
+            <TableView fx:id="enrollmentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="391.0" prefWidth="830.0">
               <columns>
                   <TableColumn fx:id="T_StudentID" prefWidth="67.0" text="Student ID" />
                   <TableColumn fx:id="T_StudentName" prefWidth="180.66665649414062" text="Student Name" />
@@ -61,6 +63,37 @@
                   <Insets left="10.0" right="10.0" top="20.0" />
                </VBox.margin>
             </TableView>
+            <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="83.0" prefWidth="246.0" styleClass="card" stylesheets="@../../resources/admindashboard/style.css">
+               <children>
+                  <HBox alignment="CENTER" maxWidth="-Infinity" prefHeight="48.0" prefWidth="273.0" stylesheets="@../../resources/admindashboard/style.css">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Grade:" wrappingWidth="68.13671875">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="20.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="txtFieldGrade" prefHeight="27.0" prefWidth="131.0" stylesheets="@../../resources/admindashboard/style.css">
+                           <styleClass>
+                              <String fx:value="search-container" />
+                              <String fx:value="transparent" />
+                           </styleClass>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <Button fx:id="GradeUpdateButton" mnemonicParsing="false" onAction="#btnUpdGrade" stylesheets="@../../resources/admindashboard/style.css" text="Update">
+                     <styleClass>
+                        <String fx:value="search-container" />
+                        <String fx:value="transparent" />
+                     </styleClass>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
          </children>
       </VBox>
    </children>

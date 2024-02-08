@@ -29,6 +29,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import models.DTODepartments;
@@ -69,6 +70,11 @@ public class EnrollmentsController implements Initializable {
     @FXML
     private Button newEnroll;
     ArrayList<DTOStudents> newenrollarr = new ArrayList<>();
+    ArrayList<DTOEnrollment> updenrollarr = new ArrayList<>();
+    @FXML
+    private TextField txtFieldGrade;
+    @FXML
+    private Button GradeUpdateButton;
 
     /**
      * Initializes the controller class.
@@ -110,7 +116,7 @@ public class EnrollmentsController implements Initializable {
         if (selectedEnroll == null) {
             // No enrollment selected, show an alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Selecting an enrollment.");
+            alert.setTitle("Select an enrollment.");
             alert.setHeaderText(null); // No header text
             alert.setContentText("Please select an enrollment first!");
             alert.showAndWait();
@@ -154,9 +160,50 @@ public class EnrollmentsController implements Initializable {
             newenrollarr = studentobj.getStudents();
             newenroll.setStudentsList(newenrollarr);
             newenrollarr.clear();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(EnrollmentsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void btnUpdGrade(ActionEvent event) {
+        DTOEnrollment selectedEnroll = enrollmentsTable.getSelectionModel().getSelectedItem();
+        int result;
+        if (selectedEnroll == null) {
+            // No enrollment selected, show an alert
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Select an enrollment.");
+            alert.setHeaderText(null); // No header text
+            alert.setContentText("Please select an enrollment to update!");
+            alert.showAndWait();
+            // Exit the method without further processing
+        } else if (txtFieldGrade.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Grade issue");
+            alert.setHeaderText(null); // No header text
+            alert.setContentText("Please enter a valid grade A,B,C, or D!");
+            alert.showAndWait();
+        } else {
+            DAOEnrollments daoEnroll = new DAOEnrollments();
+            selectedEnroll.setGrade(txtFieldGrade.getText());
+            result = daoEnroll.updGrade(selectedEnroll);
+            if (result > 0) {
+                updenrollarr = daoEnroll.getEnrollments();
+                setEnrollList(updenrollarr);
+                txtFieldGrade.clear();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null); // No header text
+                alert.setContentText("Grade has been updated!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Failed");
+                alert.setHeaderText(null); // No header text
+                alert.setContentText("Updating failed, Please try again later!");
+                alert.showAndWait();
+            }
         }
     }
 

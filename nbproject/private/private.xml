@@ -5,9 +5,8 @@
         <group>
             <file>file:/F:/ITI%20files/Case%20study%201/University/src/university/admindashboardview/students/StudentsController.java</file>
             <file>file:/F:/ITI%20files/Case%20study%201/University/src/dataaccesslayer/DAOEnrollments.java</file>
-            <file>file:/F:/ITI%20files/Case%20study%201/University/src/models/DTOEnrollment.java</file>
-            <file>file:/F:/ITI%20files/Case%20study%201/University/src/university/admindashboardview/departments/DepartmentsController.java</file>
             <file>file:/F:/ITI%20files/Case%20study%201/University/src/university/admindashboardview/courses/CoursesController.java</file>
+            <file>file:/F:/ITI%20files/Case%20study%201/University/src/university/admindashboardview/addenrollment/AddenrollmentController.java</file>
             <file>file:/F:/ITI%20files/Case%20study%201/University/src/dataaccesslayer/DAOStudents.java</file>
             <file>file:/F:/ITI%20files/Case%20study%201/University/src/university/University.java</file>
             <file>file:/F:/ITI%20files/Case%20study%201/University/src/university/admindashboardview/enrollments/EnrollmentsController.java</file>

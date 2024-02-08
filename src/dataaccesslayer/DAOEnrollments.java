@@ -65,4 +65,18 @@ public class DAOEnrollments {
         }
         return result;
     }
+    
+    public int updGrade(DTOEnrollment enroll){
+        int result=0;
+        try {
+            PreparedStatement statement= DAO.getConnection().prepareCall("Update ENROLLMENT set grade = upper(?) where student_id=? and course_id=?");
+            statement.setString(1, enroll.getGrade());
+            statement.setInt(2, enroll.getStudentID());
+            statement.setInt(3, enroll.getCourseID());
+            result = statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOEnrollments.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
 }
