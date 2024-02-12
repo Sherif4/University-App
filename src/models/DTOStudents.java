@@ -40,6 +40,11 @@ public class DTOStudents {
         this.semester = semester;
     }
 
+    public DTOStudents(String full_name, double gpa) {
+        this.full_name = full_name;
+        this.gpa = gpa;
+    }
+
     public DTOStudents(int student_id, String first_name, String last_name, String email, String phoneNumber, LocalDate DOB, String street, String city, double gpa, int department_id, int semester) {
         this.student_id = student_id;
         this.first_name = first_name;
@@ -51,6 +56,15 @@ public class DTOStudents {
         this.city = city;
         this.gpa = gpa;
         this.department_id = department_id;
+        this.semester = semester;
+    }
+
+    public DTOStudents(int student_id, String email, String phoneNumber, String street, String city, int semester) {
+        this.student_id = student_id;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.street = street;
+        this.city = city;
         this.semester = semester;
     }
 

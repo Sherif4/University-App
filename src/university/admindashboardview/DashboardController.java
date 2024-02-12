@@ -9,10 +9,13 @@ import dataaccesslayer.DAOCourses;
 import dataaccesslayer.DAOStudents;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -32,7 +35,6 @@ public class DashboardController implements Initializable {
 
     @FXML
     private AnchorPane dashboardAP;
-    @FXML
     private Label labelstate;
     @FXML
     private Label labelStudents;
@@ -58,23 +60,21 @@ public class DashboardController implements Initializable {
     private Button bttnAddStudent;
     @FXML
     private Label labelstate1;
-    @FXML
     private TextField txtFieldCourseName;
-    @FXML
     private TextField txtFieldDescription;
-    @FXML
     private TextField txtFieldCreditHours;
-    @FXML
     private TextField txtFieldDeptIDCourse;
-    @FXML
     private TextField txtFieldSemester;
-    @FXML
-    private Button bttnAddCourse;
     @FXML
     private TextField txtFieldStuSemester;
 
     String countCourses;
     String countStudents;
+    ArrayList<DTOStudents> topStudarr = new ArrayList<>();
+    @FXML
+    private BarChart<String, Double> topStudentChart;
+    @FXML
+    private BarChart<?, ?> DeptAvgGPA;
 
     /**
      * Initializes the controller class.
@@ -83,6 +83,8 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         getAllStudents();
         getAllCourses();
+        getTopStudents();
+
     }
 
     private void getAllStudents() {
@@ -95,6 +97,19 @@ public class DashboardController implements Initializable {
         DAOCourses cCount = new DAOCourses();
         countCourses = Integer.toString(cCount.countCourses());
         labelCourses.setText(countCourses);
+    }
+
+    private void getTopStudents() {
+        DAOStudents topS = new DAOStudents();
+        topStudarr = topS.topStudents();
+        for (int i = 0; i < 5; i++) {
+            String name = topStudarr.get(i).getFull_name();
+            double gpa = topStudarr.get(i).getGpa();
+            XYChart.Series<String, Double> series = new XYChart.Series<>();
+            series.setName((i+1)+". "+name);
+            series.getData().add(new XYChart.Data(name, gpa));
+            topStudentChart.getData().addAll(series);
+        }
     }
 
     @FXML
@@ -147,7 +162,6 @@ public class DashboardController implements Initializable {
         alert.showAndWait();
     }
 
-    @FXML
     private void addCourseHandler(ActionEvent event) {
 
         int result;

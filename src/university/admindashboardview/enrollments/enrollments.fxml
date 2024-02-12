@@ -49,7 +49,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="enrollmentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="391.0" prefWidth="830.0">
+            <TableView fx:id="enrollmentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="391.0" prefWidth="830.0" stylesheets="@../../resources/admindashboard/tableview.css">
               <columns>
                   <TableColumn fx:id="T_StudentID" prefWidth="67.0" text="Student ID" />
                   <TableColumn fx:id="T_StudentName" prefWidth="180.66665649414062" text="Student Name" />

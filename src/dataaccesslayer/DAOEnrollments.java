@@ -40,6 +40,29 @@ public class DAOEnrollments {
 
     }
 
+    public ArrayList<DTOEnrollment> searchEnrollments(String search) {
+        ArrayList<DTOEnrollment> arrEnroll = new ArrayList<DTOEnrollment>();
+        try {
+            PreparedStatement statement = DAO.getConnection().prepareCall("SELECT e.STUDENT_ID, e.Course_id, e.grade, e.points, e.quality_points, s.FIRST_NAME || ' ' || s.LAST_NAME, COURSE_NAME\n"
+                    + "FROM ENROLLMENT e\n"
+                    + "INNER JOIN STUDENTS s ON e.STUDENT_ID = s.STUDENT_ID\n"
+                    + "INNER JOIN COURSES C ON e.COURSE_ID = C.COURSE_ID where lower(course_name) like lower(?) or lower(s.first_name) like lower(?) or lower(s.last_name) like lower(?)");
+            statement.setString(1, "%" + search + "%");
+            statement.setString(2, "%" + search + "%");
+            statement.setString(3, "%" + search + "%");
+
+            ResultSet res = statement.executeQuery();
+            while (res.next()) {
+                arrEnroll.add(new DTOEnrollment(res.getInt(1), res.getInt(2), res.getString(3), res.getDouble(4), res.getInt(5), res.getString(6), res.getString(7)));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOEnrollments.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arrEnroll;
+
+    }
+
     public int delEnrollment(DTOEnrollment enroll) {
         int result = 0;
         try {
@@ -65,11 +88,11 @@ public class DAOEnrollments {
         }
         return result;
     }
-    
-    public int updGrade(DTOEnrollment enroll){
-        int result=0;
+
+    public int updGrade(DTOEnrollment enroll) {
+        int result = 0;
         try {
-            PreparedStatement statement= DAO.getConnection().prepareCall("Update ENROLLMENT set grade = upper(?) where student_id=? and course_id=?");
+            PreparedStatement statement = DAO.getConnection().prepareCall("Update ENROLLMENT set grade = upper(?) where student_id=? and course_id=?");
             statement.setString(1, enroll.getGrade());
             statement.setInt(2, enroll.getStudentID());
             statement.setInt(3, enroll.getCourseID());

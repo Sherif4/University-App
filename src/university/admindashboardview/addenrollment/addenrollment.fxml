@@ -77,7 +77,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="405.0" prefWidth="850.0" spacing="50.0">
                <children>
-                  <TableView fx:id="StudentenrollTable" prefHeight="431.0" prefWidth="376.0">
+                  <TableView fx:id="StudentenrollTable" prefHeight="402.0" prefWidth="391.0" stylesheets="@../../resources/admindashboard/tableview.css">
                     <columns>
                         <TableColumn fx:id="T_StudentID" prefWidth="70.0" text="Student ID" />
                         <TableColumn fx:id="T_StudentName" prefWidth="188.0" text="Student Name" />
@@ -85,7 +85,7 @@
                         <TableColumn fx:id="T_StudDept" prefWidth="55.0" text="Dept ID" />
                     </columns>
                   </TableView>
-                  <TableView fx:id="CoursesenrollTable" prefHeight="431.0" prefWidth="376.0">
+                  <TableView fx:id="CoursesenrollTable" prefHeight="431.0" prefWidth="376.0" stylesheets="@../../resources/admindashboard/tableview.css">
                      <columns>
                         <TableColumn fx:id="T_CourseID1" prefWidth="65.33334350585938" text="Course ID" />
                         <TableColumn fx:id="T_Course_name1" prefWidth="207.0" text="Course" />

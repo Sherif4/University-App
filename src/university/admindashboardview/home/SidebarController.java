@@ -26,7 +26,12 @@ import dataaccesslayer.DAOCourses;
 import dataaccesslayer.DAODepartments;
 import dataaccesslayer.DAOEnrollments;
 import dataaccesslayer.DAOStudents;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import models.DTODepartments;
 import models.DTOEnrollment;
 import university.admindashboardview.courses.CoursesController;
@@ -68,12 +73,12 @@ public class SidebarController implements Initializable {
     private Button btnCourses;
     @FXML
     private Button btnEnrollment;
+    @FXML
+    private Button btnsignout;
 
     public void setMainAP(AnchorPane mainAP) {
         this.mainAP.getChildren().setAll(mainAP);
     }
-
-    
 
     @FXML
     void clickCourse(ActionEvent event) {
@@ -100,7 +105,7 @@ public class SidebarController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/university/admindashboardview/Dashboard.fxml"));
             AnchorPane anchorpane = loader.load();
             mainAP.getChildren().setAll(anchorpane);
-
+            view = "Dashboard";
         } catch (IOException ex) {
             Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -113,103 +118,6 @@ public class SidebarController implements Initializable {
 
     }
 
-    /*
-    void clickUsers(ActionEvent event) {
-        if (DashboardController.getServer() == null) {
-            showAlert("Server is not running. Please start the server.");
-        } else if (!DashboardController.getServer().isServerRunning()) {
-            showAlert("Server is not running. Please start the server.");
-        } else {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/serveriwish/admindashboardview/users/Users.fxml"));
-                AnchorPane anchorpane = loader.load();
-                mainAP.getChildren().setAll(anchorpane);
-                view = "Users";
-                UsersController userController = loader.getController();
-                DAOUser userObj = new DAOUser();
-                try {
-                    arrUser = userObj.getUsers();
-                    userController.setItemList(arrUser);
-                    arrUser.clear();
-                } catch (SQLException ex) {
-                    Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    @FXML
-    void search(ActionEvent event) throws IOException, SQLException {
-        if (DashboardController.getServer() == null) {
-            showAlert("Server is not running. Please start the server.");
-        } else if (!DashboardController.getServer().isServerRunning()) {
-            showAlert("Server is not running. Please start the server.");
-        } else {
-            switch (view) {
-                case "Users":
-                    if (txtfieldSearch.getText().isEmpty() != true) {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/serveriwish/admindashboardview/users/Users.fxml"));
-                        AnchorPane anchorpane = loader.load();
-                        mainAP.getChildren().setAll(anchorpane);
-                        UsersController userController = loader.getController();
-                        DAOUser usersearchObj = new DAOUser();
-                        arrSearchUser = usersearchObj.searchUsers(txtfieldSearch.getText());
-                        userController.setItemList(arrSearchUser);
-                        arrSearchUser.clear();
-                    } else {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/serveriwish/admindashboardview/users/Users.fxml"));
-                        AnchorPane anchorpane = loader.load();
-                        mainAP.getChildren().setAll(anchorpane);
-                        UsersController userController = loader.getController();
-                        DAOUser userObj = new DAOUser();
-                        arrUser = userObj.getUsers();
-                        userController.setItemList(arrUser);
-                        arrUser.clear();
-                    }
-                    break;
-
-                case "Items":
-                    if (txtfieldSearch.getText().isEmpty() != true) {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/serveriwish/admindashboardview/items/Items.fxml"));
-                        AnchorPane anchorpane = loader.load();
-                        mainAP.getChildren().setAll(anchorpane);
-                        ItemsController itemsController = loader.getController();
-                        DAOItem itemsearchObj = new DAOItem();
-                        arrSearchItems = itemsearchObj.searchItems(txtfieldSearch.getText());
-                        itemsController.setItemList(arrSearchItems);
-                        arrSearchItems.clear();
-                    } else {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/serveriwish/admindashboardview/items/Items.fxml"));
-                        AnchorPane anchorpane = loader.load();
-                        mainAP.getChildren().setAll(anchorpane);
-                        view = "Items";
-                        ItemsController itemsController = loader.getController();
-                        DAOItem itemObj = new DAOItem();
-                        arrItems = itemObj.getItems();
-                        itemsController.setItemList(arrItems);
-                        arrItems.clear();
-                    }
-                    break;
-                default:
-                    System.out.println("failed search");
-                    break;
-            }
-        }
-    }
-
-   
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Server Alert");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-     */
     @FXML
     private void clickStudents(ActionEvent event) {
         try {
@@ -264,6 +172,102 @@ public class SidebarController implements Initializable {
 
     @FXML
     private void search(ActionEvent event) {
+        if (txtfieldSearch.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Failed");
+            alert.setHeaderText(null); // No header text
+            alert.setContentText("Search box is empty!");
+            alert.showAndWait();
+        } else {
+            String search = txtfieldSearch.getText();
+            switch (view) {
+                case "Students":
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/university/admindashboardview/students/students.fxml"));
+                    AnchorPane anchorpane;
+                    try {
+                        anchorpane = loader.load();
+                        mainAP.getChildren().setAll(anchorpane);
+                    } catch (IOException ex) {
+                        Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    StudentsController studentsController = loader.getController();
+                    DAOStudents studentsObj = new DAOStudents();
+                    arrStudents = studentsObj.searchStudents(search);
+                    studentsController.setStudentsList(arrStudents);
+                    arrStudents.clear();
+                    break;
+                case "Courses":
+                    try {
+                        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/university/admindashboardview/courses/courses.fxml"));
+                        AnchorPane anchorpane2 = loader2.load();
+                        mainAP.getChildren().setAll(anchorpane2);
+                        CoursesController coursesController = loader2.getController();
+                        DAOCourses coursesObj = new DAOCourses();
+                        arrCourses = coursesObj.searchCourses(search);
+                        coursesController.setCoursesList(arrCourses);
+                        arrCourses.clear();
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+
+                case "Departments":
+                    try {
+                        FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/university/admindashboardview/departments/departments.fxml"));
+                        AnchorPane anchorpane3 = loader3.load();
+                        mainAP.getChildren().setAll(anchorpane3);
+                        DepartmentsController deptsontroller = loader3.getController();
+                        DAODepartments deptsObj = new DAODepartments();
+                        arrDept = deptsObj.searchDepartments(search);
+                        deptsontroller.setDeptsList(arrDept);
+                        arrDept.clear();
+                    } catch (IOException ex) {
+                        Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+
+                case "Enrollments":
+
+                    FXMLLoader loader4 = new FXMLLoader(getClass().getResource("/university/admindashboardview/enrollments/enrollments.fxml"));
+                    AnchorPane anchorpane4;
+                    try {
+                        anchorpane4 = loader4.load();
+                        mainAP.getChildren().setAll(anchorpane4);
+                    } catch (IOException ex) {
+                        Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    EnrollmentsController enrollontroller = loader4.getController();
+                    DAOEnrollments enrollObj = new DAOEnrollments();
+                    arrEnroll = enrollObj.searchEnrollments(search);
+                    enrollontroller.setEnrollList(arrEnroll);
+                    arrEnroll.clear();
+                    break;
+                case "Dashboard":
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Failed");
+                    alert.setHeaderText(null); // No header text
+                    alert.setContentText("No search available in this scene");
+                    alert.showAndWait();
+                default:
+                    System.out.println("failed search");
+                    break;
+            }
+        }
+    }
+
+    @FXML
+    private void clickSignOut(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/university/Login/Login.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SidebarController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

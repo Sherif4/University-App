@@ -1,0 +1,1 @@
+SCHTASKS /CREATE /SC DAILY /TN "UniversityBash" /TR "'F:\ITI files\Case study 1\Bash\bash.sh'" /ST 17:00

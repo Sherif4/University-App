@@ -43,7 +43,7 @@ public class DepartmentsController implements Initializable {
     private TableColumn<DTODepartments, String> T_name;
     @FXML
     private TableColumn<DTODepartments, Double> T_avgGPA;
-    
+
     ObservableList<DTODepartments> obsDepts = FXCollections.observableArrayList();
 
     /**
@@ -58,10 +58,10 @@ public class DepartmentsController implements Initializable {
         T_name.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getDept_name());
         });
-       
+
         T_avgGPA.setCellValueFactory(cellData -> {
-        return new SimpleObjectProperty<>(cellData.getValue().getAvg_GPA());
-                });
+            return new SimpleObjectProperty<>(cellData.getValue().getAvg_GPA());
+        });
 
     }
 
@@ -71,38 +71,12 @@ public class DepartmentsController implements Initializable {
 
     @FXML
     private void btnDeleteDept(ActionEvent event) {
-        int result;
-        DTODepartments dtoDept = DeptsTable.getSelectionModel().getSelectedItem();
-        if (dtoDept == null) {
-            // No item selected, show an alert
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Selecting a Department.");
-            alert.setHeaderText(null); // No header text
-            alert.setContentText("Please select a department first!");
-            alert.showAndWait();
-            return; // Exit the method without further processing
-        } else {
-            obsDepts.remove(dtoDept);
-            DAODepartments daoDept = new DAODepartments();
-            result = daoDept.delDepartment(dtoDept);
-            if (result > 0) {
-                obsDepts.remove(dtoDept);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Successful");
-                alert.setHeaderText(null); // No header text
-                alert.setContentText("Department has been removed successfully!");
-                alert.showAndWait();
-                return;
-            }
-            else{
-                 Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Failed");
-                alert.setHeaderText(null); // No header text
-                alert.setContentText("Please try again later!");
-                alert.showAndWait();
-                return;
-            }
-        }
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Failed");
+        alert.setHeaderText(null); // No header text
+        alert.setContentText("Please contact the database adminstrator in order to delete a department!");
+        alert.showAndWait();
+
     }
 
 }

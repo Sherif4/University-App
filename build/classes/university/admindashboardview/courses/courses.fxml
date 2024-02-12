@@ -33,12 +33,21 @@
                      <font>
                         <Font name="Segoe UI Semibold" size="15.0" />
                      </font></Button>
+                  <Button fx:id="updCourse" mnemonicParsing="false" onAction="#btnUpdateCourse" stylesheets="@../../resources/admindashboard/style.css" text="Update Course" textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="search-container" />
+                        <String fx:value="primary-color" />
+                     </styleClass>
+                     <font>
+                        <Font name="Segoe UI Semibold" size="15.0" />
+                     </font>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="CoursesTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="463.0" prefWidth="830.0">
+            <TableView fx:id="CoursesTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="463.0" prefWidth="830.0" stylesheets="@../../resources/admindashboard/tableview.css">
               <columns>
                   <TableColumn fx:id="T_id" prefWidth="53.0" text="ID" />
                 <TableColumn fx:id="T_name" prefWidth="183.0" text="Name" />

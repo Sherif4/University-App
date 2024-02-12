@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 /**
  *
  * @author Sherif
@@ -20,10 +19,10 @@ public class University extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/university/admindashboardview/home/Home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/university/Login/Login.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.show();
 
     }

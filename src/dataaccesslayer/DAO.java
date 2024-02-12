@@ -20,20 +20,41 @@ public class DAO {
 
     private static DAO instance;
     private static Connection con;
-    private static final String JDBC_URL = "jdbc:oracle:thin:@localhost:1521:XE";
-    private static final String user = "University";
-    private static final String password = "123";
+    private static final String JDBC_URL = "jdbc:oracle:oci8:@localhost:1521:XE";
+    private static String user = "University";
+    private static String password = "123";
 
-
-    public static Connection getConnection() throws SQLException {
+    private DAO() {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:oci8:@localhost:1521:XE", "University", "123");
-            return con;
+            con = DriverManager.getConnection(JDBC_URL, user, password);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            System.out.println("Faild");
+
         }
-        return null;
+
+    }
+
+
+    public static void setUser(String user) {
+        DAO.user = user;
+    }
+
+    public static void setPassword(String password) {
+        DAO.password = password;
+    }
+
+    public static DAO getInstance() {//instansation method for signleton object
+        if (instance == null) {
+            instance = new DAO();
+        }
+        return instance;
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return con;
     }
 
 }
